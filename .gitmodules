@@ -1,0 +1,3 @@
+[submodule "docker-cuda-ethminer"]
+	path = docker-cuda-ethminer
+	url = https://github.com/rcdmrc/docker-cuda-ethminer.git
