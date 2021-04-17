@@ -1,0 +1,63 @@
+version: "3"
+
+networks:
+  ethmonitor:
+
+services:
+# My grafana service 
+  grafana:
+    image: docker-grafana
+    build:
+      context: ./docker-grafana
+    ports:
+      - 9000:3000
+    volumes:
+      - ethminer-grafana-data:/var/lib/grafana
+    networks: 
+      - ethmonitor
+
+  prometheus:
+    image: prom/prometheus:v2.21.0
+    volumes:
+      - ./docker-prometheus/etc/prometheus/:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - 9090:9090
+    networks:
+      - ethmonitor
+
+  fluentd:
+    image: docker-fluentd
+    build:
+      context: ./docker-grafana
+    volumes:
+      - ./docker-fluentd/my-fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+      - "24231:24231"
+    networks:
+      - ethmonitor
+
+  ethminer:
+    image: docker-cuda-ethminer
+    runtime: nvidia
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "172.17.0.1:24224"
+        tag: "docker.ethminer.{{.ID}}"
+    command:
+      - "--cuda"
+      - "--HWMON"
+      - "2"
+      - "-M"
+      - "1"
+      - "--nocolor"
+    networks:
+      - ethmonitor
+    
+volumes:
+  ethminer-grafana-data:
