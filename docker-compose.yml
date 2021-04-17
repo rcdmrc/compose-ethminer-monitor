@@ -58,6 +58,8 @@ services:
       - "--nocolor"
     networks:
       - ethmonitor
+    depends_on: 
+      - fluentd
     
 volumes:
   ethminer-grafana-data:
