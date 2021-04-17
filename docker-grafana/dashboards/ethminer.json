@@ -63,7 +63,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "hashrate",
+            "expr": "ethminer_hashrate",
             "interval": "",
             "legendFormat": "Mh/s",
             "refId": "A"
@@ -169,7 +169,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "gpu_temp",
+            "expr": "ethminer_gpu_temp",
             "format": "time_series",
             "interval": "",
             "legendFormat": "℃",
@@ -262,7 +262,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "gpu_power_usage",
+            "expr": "ethminer_gpu_power",
             "interval": "",
             "legendFormat": "Watts",
             "refId": "A"

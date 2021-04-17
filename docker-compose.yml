@@ -33,7 +33,7 @@ services:
     build:
       context: ./docker-grafana
     volumes:
-      - ./docker-fluentd/my-fluent.conf:/fluentd/etc/fluent.conf
+      - ./docker-fluentd/fluent-ethminer.conf:/fluentd/etc/fluent.conf
     ports:
       - "24224:24224"
       - "24224:24224/udp"
